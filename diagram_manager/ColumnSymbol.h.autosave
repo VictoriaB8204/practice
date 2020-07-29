@@ -1,0 +1,33 @@
+/*
+ * Copyright (C) 2020 Rhonda Software.
+ * All rights reserved.
+ */
+
+/////////////////////////////////////////////////////////////
+
+#pragma once
+
+/////////////////////////////////////////////////////////////
+
+#include <qwt_column_symbol.h>
+
+enum EColumnSymbolStyle { NoStyle = -1, BoxStyle, UserStyle = 1000 };
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+class CColumnSymbol
+{
+    QwtColumnSymbol *m_symbol;
+public:
+    CColumnSymbol(EColumnSymbolStyle style);
+    QwtColumnSymbol* ToQwtColumnSymbol();
+    ~CColumnSymbol();
+};
+
+/////////////////////////////////////////////////////////////
+
+#ifdef __cplusplus
+}
+#endif

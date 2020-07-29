@@ -1,25 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <qwt_plot.h>
-#include <qwt_plot_grid.h>
-
-#include <qwt_legend.h>
-
-#include <qwt_plot_curve.h>
-#include <qwt_symbol.h>
-
-#include <qwt_plot_magnifier.h>
-
-#include <qwt_plot_panner.h>
-
-#include <qwt_plot_picker.h>
-#include <qwt_picker_machine.h>
-
-bool lessThanPoint(const QPointF &p1, const QPointF &p2)
-{
-    return ( p1.x() < p2.x() );
-}
+#include "diagram_manager/PlotCreator.h"
+#include "diagram_manager/PlotCurveCreator.h"
+#include "diagram_manager/PlotMarkerCreator.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -27,35 +11,33 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QwtPlot *d_plot = new QwtPlot(this);
-    setCentralWidget(d_plot);
+    CDiagramCreator *creator = new CPlotCreator();
+    IDiagram *d_plot = creator->CreateDiagram();
+    setCentralWidget(d_plot->SetWidget());
 
-    d_plot->setTitle( "Qwt demonstration" ); // заголовок
-    d_plot->setCanvasBackground( Qt::white ); // цвет фона
+    d_plot->SetTitle( "Qwt demonstration" ); // заголовок
 
     // Параметры осей координат
-    d_plot->setAxisTitle(QwtPlot::yLeft, "Y");
-    d_plot->setAxisTitle(QwtPlot::xBottom, "X");
-    d_plot->insertLegend( new QwtLegend() );
+    d_plot->SetAxisTitle(Y_LEFT, "Y");
+    d_plot->SetAxisTitle(X_BOTTOM, "X");
+    d_plot->InsertLegend(RIGHT_LEGEND);
 
+    CObjectCreator *curveCreator = new CPlotCurveCreator();
+    IObject *curve = curveCreator->CreateObject();
+    curve->SetTitle( "Demo Curve" );
+    QPen *pen = new QPen( Qt::blue, 3 );
+    curve->SetPen( *pen ); // цвет и толщина кривой
 
-    // Включить сетку
-    // #include <qwt_plot_grid.h>
-    QwtPlotGrid *grid = new QwtPlotGrid(); //
-    grid->setMajorPen(QPen( Qt::gray, 2 )); // цвет линий и толщина
-    grid->attach( d_plot ); // добавить сетку к полю графика
-
-    QwtPlotCurve *curve = new QwtPlotCurve();
-    curve->setTitle( "Demo Curve" );
-    curve->setPen( Qt::blue, 3 ); // цвет и толщина кривой
-    curve->setRenderHint
-            ( QwtPlotItem::RenderAntialiased, true ); // сглаживание
+    CObjectCreator *markerCreator = new CPlotMarkerCreator();
+    IObject *marker = markerCreator->CreateObject();
+    marker->SetTitle( "Demo Marker" );
+    marker->SetPen( *pen ); // цвет и толщина кривой
 
     // Маркеры кривой
     // #include <qwt_symbol.h>
-    QwtSymbol *symbol = new QwtSymbol( QwtSymbol::Style(0),
+    CSymbol *symbol = new CSymbol( EStyle(0),
         QBrush( Qt::yellow ), QPen( Qt::blue, 2 ), QSize( 15, 15 ) );
-    curve->setSymbol( symbol );
+    curve->SetSymbol( symbol );
 
     // Добавить точки на ранее созданную кривую
     QPolygonF points;
@@ -65,45 +47,43 @@ MainWindow::MainWindow(QWidget *parent)
     << QPointF( 3.5, 3.0 ) << QPointF( 5.0, 3.0 )
     << QPointF( 2.5, 1.0 ) << QPointF( 5.0, 2.5 );
 
-     qSort(points.begin(), points.end(),lessThanPoint);
+     curve->SetSamples( points ); // ассоциировать набор точек с кривой
 
-     curve->setSamples( points ); // ассоциировать набор точек с кривой
-
-     curve->attach( d_plot ); // отобразить кривую на графике
+     curve->Attach( d_plot ); // отобразить кривую на графике
 
      // Включить возможность приближения/удаления графика
       // #include <qwt_plot_magnifier.h>
-      QwtPlotMagnifier *magnifier = new QwtPlotMagnifier(d_plot->canvas());
-      // клавиша, активирующая приближение/удаление
-      magnifier->setMouseButton(Qt::LeftButton);
+//      QwtPlotMagnifier *magnifier = new QwtPlotMagnifier(d_plot->canvas());
+//      // клавиша, активирующая приближение/удаление
+//      magnifier->setMouseButton(Qt::LeftButton);
 
 
-      // Включить возможность перемещения по графику
-      // #include <qwt_plot_panner.h>
-      QwtPlotPanner *d_panner = new QwtPlotPanner( d_plot->canvas() );
-      // клавиша, активирующая перемещение
-      d_panner->setMouseButton( Qt::RightButton );
+//      // Включить возможность перемещения по графику
+//      // #include <qwt_plot_panner.h>
+//      QwtPlotPanner *d_panner = new QwtPlotPanner( d_plot->canvas() );
+//      // клавиша, активирующая перемещение
+//      d_panner->setMouseButton( Qt::RightButton );
 
-      // Включить отображение координат курсора и двух перпендикулярных
-      // линий в месте его отображения
-      // #include <qwt_plot_picker.h>
+//      // Включить отображение координат курсора и двух перпендикулярных
+//      // линий в месте его отображения
+//      // #include <qwt_plot_picker.h>
 
-       // настройка функций
-      QwtPlotPicker *d_picker =
-              new QwtPlotPicker(
-                  QwtPlot::xBottom, QwtPlot::yLeft, // ассоциация с осями
-      QwtPlotPicker::CrossRubberBand, // стиль перпендикулярных линий
-      QwtPicker::ActiveOnly, // включение/выключение
-      d_plot->canvas() ); // ассоциация с полем
+//       // настройка функций
+//      QwtPlotPicker *d_picker =
+//              new QwtPlotPicker(
+//                  QwtPlot::xBottom, QwtPlot::yLeft, // ассоциация с осями
+//      QwtPlotPicker::CrossRubberBand, // стиль перпендикулярных линий
+//      QwtPicker::ActiveOnly, // включение/выключение
+//      d_plot->canvas() ); // ассоциация с полем
 
-      // Цвет перпендикулярных линий
-      d_picker->setRubberBandPen( QColor( Qt::red ) );
+//      // Цвет перпендикулярных линий
+//      d_picker->setRubberBandPen( QColor( Qt::red ) );
 
-      // цвет координат положения указателя
-      d_picker->setTrackerPen( QColor( Qt::black ) );
+//      // цвет координат положения указателя
+//      d_picker->setTrackerPen( QColor( Qt::black ) );
 
-      // непосредственное включение вышеописанных функций
-      d_picker->setStateMachine( new QwtPickerDragPointMachine() );
+//      // непосредственное включение вышеописанных функций
+//      d_picker->setStateMachine( new QwtPickerDragPointMachine() );
 }
 
 MainWindow::~MainWindow()

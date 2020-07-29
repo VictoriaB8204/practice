@@ -1,0 +1,40 @@
+/*
+ * Copyright (C) 2020 Rhonda Software.
+ * All rights reserved.
+ */
+
+/////////////////////////////////////////////////////////////
+
+#pragma once
+
+/////////////////////////////////////////////////////////////
+
+#include "GraphicSettings.h"
+#include "IntervalSample.h"
+#include "IntervalSymbol.h"
+#include <qwt_plot_intervalcurve.h>
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+class CPlotIntervalCurve : public IGraphicSettings
+{
+    QwtPlotIntervalCurve *m_curve;
+public:
+    CPlotIntervalCurve();
+    void SetPaintAttribute ( EPaintAttribute attribute, bool on = true );
+    void SetSamples ( QVector< CIntervalSample > samples);
+    void SetPen (const QPen & pen) override;
+    void SetBrush ( const QBrush &brush ) override;
+    void SetStyle (ECurveStyle style ) override;
+    void SetSymbol ( CIntervalSymbol symbol );
+    void Attach( IDiagram *diagram ) override;
+    ~CPlotIntervalCurve();
+};
+
+/////////////////////////////////////////////////////////////
+
+#ifdef __cplusplus
+}
+#endif

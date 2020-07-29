@@ -1,0 +1,4 @@
+#ifndef DIAGRAMCREATOR_H
+#define DIAGRAMCREATOR_H
+
+#endif // DIAGRAMCREATOR_H

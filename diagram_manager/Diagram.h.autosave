@@ -1,0 +1,46 @@
+/*
+ * Copyright (C) 2020 Rhonda Software.
+ * All rights reserved.
+ */
+
+/////////////////////////////////////////////////////////////
+
+#pragma once
+
+/////////////////////////////////////////////////////////////
+
+#include <qwt_plot.h>
+
+enum EAxis { X_TOP, X_BOTTOM, Y_LEFT, Y_RIGHT };
+
+enum ELegendPosition 
+{ 
+    LEFT_LEGEND, RIGHT_LEGEND, BOTTOM_LEGEND, TOP_LEGEND  
+};
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+class IDiagram
+{
+public:
+    virtual void SetAxisTitle( EAxis, QString ) = 0;
+    virtual void SetAxisScale( EAxis, double, double, double ) = 0;
+    virtual void SetTitle( QString ) = 0;
+    virtual void SetFooter( QString ) = 0;
+    virtual void SetAxisMaxMinor( EAxis, int ) = 0;
+    virtual void SetAxisMaxMajor( EAxis, int ) = 0;
+    virtual void InsertLegend( ELegendPosition ) = 0;
+    virtual void SetMagnifier( Qt::MouseButton ) = 0;
+    virtual void SetPanner( Qt::MouseButton ) = 0;
+    virtual QwtPlot* SetWidget();
+    virtual QwtPlot* SetParent();
+    virtual ~IDiagram();
+};
+
+/////////////////////////////////////////////////////////////
+
+#ifdef __cplusplus
+}
+#endif

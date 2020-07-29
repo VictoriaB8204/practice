@@ -1,0 +1,4 @@
+#ifndef COLUMNSYMBOL_H
+#define COLUMNSYMBOL_H
+
+#endif // COLUMNSYMBOL_H

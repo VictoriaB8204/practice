@@ -1,0 +1,84 @@
+/*
+ * Copyright (C) 2020 Rhonda Software.
+ * All rights reserved.
+ */
+
+/////////////////////////////////////////////////////////////
+
+#include "PlotIntervalCurve.h"
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+
+//
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+
+CPlotIntervalCurve::CPlotIntervalCurve()
+{
+    m_curve = new QwtPlotIntervalCurve();
+}
+
+/////////////////////////////////////////////////////////////
+
+void CPlotIntervalCurve::SetPaintAttribute ( EPaintAttribute attribute, bool on )
+{
+    m_curve->setPaintAttribute( QwtPlotIntervalCurve::PaintAttribute(attribute), on );
+}
+
+/////////////////////////////////////////////////////////////
+
+void CPlotIntervalCurve::SetSamples ( QVector< CIntervalSample > samples)
+{
+    QVector<QwtIntervalSample> vector;
+
+    for(int i = 0; i < samples.size(); i++)
+        vector.push_back( *samples.at(i).ToQwtIntervalSample() );
+
+    m_curve->setSamples( vector );
+}
+
+/////////////////////////////////////////////////////////////
+
+void CPlotIntervalCurve::SetPen (const QPen & pen)
+{
+    m_curve->setPen( pen );
+}
+
+/////////////////////////////////////////////////////////////
+
+void CPlotIntervalCurve::SetBrush ( const QBrush &brush )
+{
+    m_curve->setBrush( brush );
+}
+
+/////////////////////////////////////////////////////////////
+
+void CPlotIntervalCurve::SetStyle (ECurveStyle style )
+{
+    m_curve->setStyle( QwtPlotIntervalCurve::CurveStyle(style) );
+}
+
+/////////////////////////////////////////////////////////////
+
+void CPlotIntervalCurve::SetSymbol ( CIntervalSymbol symbol )
+{
+    m_curve->setSymbol( symbol.ToQwtIntervalSymbol() );
+}
+
+/////////////////////////////////////////////////////////////
+
+void CPlotIntervalCurve::Attach( CPlot *plot )
+{
+    m_curve->attach( plot->ToQwtPlot() );
+}
+
+/////////////////////////////////////////////////////////////
+
+CPlotIntervalCurve::~CPlotIntervalCurve()
+{
+    delete [] m_curve;
+}

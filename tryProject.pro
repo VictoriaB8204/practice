@@ -16,11 +16,39 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    DiagramManager.cpp \
+    diagram_manager/ColumnSymbol.cpp \
+    diagram_manager/IntervalSample.cpp \
+    diagram_manager/IntervalSymbol.cpp \
+    diagram_manager/Plot.cpp \
+    diagram_manager/PlotCurve.cpp \
+    diagram_manager/PlotHistogram.cpp \
+    diagram_manager/PlotIntervalCurve.cpp \
+    diagram_manager/PlotMarker.cpp \
+    diagram_manager/Symbol.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    tmp.cpp
 
 HEADERS += \
+    diagram_manager/ColumnSymbol.h \
+    diagram_manager/Diagram.h \
+    diagram_manager/DiagramCreator.h \
+    diagram_manager/GraphicSettings.h \
+    diagram_manager/IntervalSample.h \
+    diagram_manager/IntervalSymbol.h \
+    diagram_manager/Object.h \
+    diagram_manager/ObjectCreator.h \
+    diagram_manager/Plot.h \
+    diagram_manager/PlotCreator.h \
+    diagram_manager/PlotCurve.h \
+    diagram_manager/PlotCurveCreator.h \
+    diagram_manager/PlotHistogram.h \
+    diagram_manager/PlotHistogramCreator.h \
+    diagram_manager/PlotIntervalCurve.h \
+    diagram_manager/PlotIntervalCurveCreator.h \
+    diagram_manager/PlotMarker.h \
+    diagram_manager/PlotMarkerCreator.h \
+    diagram_manager/Symbol.h \
     mainwindow.h
 
 FORMS += \

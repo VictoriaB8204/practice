@@ -19,10 +19,12 @@ class CMarkerCreator
 {
 public:
     virtual IMarker* FactoryMethod() const = 0;
+
     IMarker* CreateObject() const
     {
         return this->FactoryMethod();
     }
+
     virtual ~CMarkerCreator(){};
 };
 

@@ -21,12 +21,12 @@ class CPlotIntervalCurve : public IIntervalObject
     QwtPlotIntervalCurve *m_curve;
 public:
     CPlotIntervalCurve();
-    void SetTitle ( QString ) override;
-    void SetSamples( QVector< CIntervalSample > ) override;
-    void SetPen( const QPen & ) override;
-    void SetBrush( const QBrush & ) override;
-    void SetStyle( ECurveStyle ) override;
-    void Attach( IDiagram * ) override;
+    void SetTitle( QString title ) override;
+    void SetSamples( QVector< CIntervalSample > points ) override;
+    void SetPen( const QPen &pen ) override;
+    void SetBrush( const QBrush &brush ) override;
+    void SetStyle( ECurveStyle style ) override;
+    void Attach( IDiagram *diagram ) override;
     ~CPlotIntervalCurve();
 };
 

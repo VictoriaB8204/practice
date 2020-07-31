@@ -21,17 +21,17 @@ class CPlot : public IDiagram
 
 public:
     CPlot();
-    void SetAxisTitle( EAxis, QString ) override;
-    void SetAxisScale( EAxis, double, double, double ) override;
-    void SetTitle( QString ) override;
-    void SetFooter( QString ) override;
-    void SetBackground( Qt::GlobalColor ) override;
-    void SetAxisMaxMinor( EAxis, int ) override;
-    void SetAxisMaxMajor( EAxis, int ) override;
-    void SetGrid( QPen ) override;
-    void SetLegend( ELegendPosition ) override;
-    void SetMagnifier( Qt::MouseButton ) override;
-    void SetPanner( Qt::MouseButton ) override;
+    void SetAxisTitle( EAxis axis, QString string ) override;
+    void SetAxisScale( EAxis axis, double min, double max, double step ) override;
+    void SetTitle( QString title ) override;
+    void SetFooter( QString string ) override;
+    void SetBackground( Qt::GlobalColor color ) override;
+    void SetAxisMaxMinor( EAxis axis, int maxMinor ) override;
+    void SetAxisMaxMajor( EAxis axis, int maxMajor ) override;
+    void SetGrid( QPen pen ) override;
+    void SetLegend( ELegendPosition position ) override;
+    void SetMagnifier( Qt::MouseButton button ) override;
+    void SetPanner( Qt::MouseButton button ) override;
     QwtPlot* SetWidget() override;
     QwtPlot* SetParent() override;
     ~CPlot();

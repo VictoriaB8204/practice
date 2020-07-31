@@ -19,10 +19,12 @@ class CDiagramCreator
 {
 public:
     virtual IDiagram* FactoryMethod() const = 0;
+
     IDiagram* CreateDiagram() const
     {
         return this->FactoryMethod();
     }
+
     virtual ~CDiagramCreator(){};
 };
 

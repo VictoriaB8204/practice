@@ -30,17 +30,17 @@ public:
         BOTTOM_LEGEND, TOP_LEGEND
     };
 
-    virtual void SetAxisTitle( EAxis, QString ) = 0;
-    virtual void SetAxisScale( EAxis, double, double, double ) = 0;
-    virtual void SetTitle( QString ) = 0;
-    virtual void SetFooter( QString ) = 0;
-    virtual void SetBackground( Qt::GlobalColor ) = 0;
-    virtual void SetAxisMaxMinor( EAxis, int ) = 0;
-    virtual void SetAxisMaxMajor( EAxis, int ) = 0;
-    virtual void SetGrid( QPen ) = 0;
-    virtual void SetLegend( ELegendPosition ) = 0;
-    virtual void SetMagnifier( Qt::MouseButton ) = 0;
-    virtual void SetPanner( Qt::MouseButton ) = 0;
+    virtual void SetAxisTitle( EAxis axis, QString string ) = 0;
+    virtual void SetAxisScale( EAxis axis, double min, double max, double step ) = 0;
+    virtual void SetTitle( QString title ) = 0;
+    virtual void SetFooter( QString string ) = 0;
+    virtual void SetBackground( Qt::GlobalColor color ) = 0;
+    virtual void SetAxisMaxMinor( EAxis axis, int maxMinor ) = 0;
+    virtual void SetAxisMaxMajor( EAxis, int maxMajor ) = 0;
+    virtual void SetGrid( QPen pen ) = 0;
+    virtual void SetLegend( ELegendPosition position ) = 0;
+    virtual void SetMagnifier( Qt::MouseButton button ) = 0;
+    virtual void SetPanner( Qt::MouseButton button ) = 0;
     virtual QwtPlot* SetWidget() = 0;
     virtual QwtPlot* SetParent() = 0;
     virtual ~IDiagram(){};

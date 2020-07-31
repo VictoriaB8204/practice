@@ -19,10 +19,12 @@ class CCurveCreator
 {
 public:
     virtual ICurve* FactoryMethod() const = 0;
+
     ICurve* CreateObject() const
     {
         return this->FactoryMethod();
     }
+
     virtual ~CCurveCreator(){};
 };
 

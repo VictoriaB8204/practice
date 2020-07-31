@@ -21,7 +21,7 @@ class CIntervalSample
     double m_min;
     double m_max;
 public:
-    CIntervalSample( double, double, double );
+    CIntervalSample( double value, double min, double max );
     QwtIntervalSample* ToQwtIntervalSample() const;
 };
 

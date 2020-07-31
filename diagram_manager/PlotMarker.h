@@ -21,19 +21,19 @@ class CPlotMarker : public IMarker
     QwtPlotMarker *m_marker;
 public:
     CPlotMarker();
-    void SetXValue( double ) override;
-    void SetYValue( double ) override;
-    void SetValue( double, double ) override;
-    void SetValue( QPointF ) override;
-    void SetLineStyle( ELineStyle ) override;
-    void SetLinePen( QPen ) override;
-    void SetSymbol( CSymbol ) override;
-    void SetLabel( QString ) override;
-    void SetLabelAlignment( Qt::Alignment ) override;
-    void SetLabelOrientation( Qt::Orientation ) override;
-    void SetSpacing( int ) override;
-    void SetTitle( QString ) override;
-    void Attach( IDiagram * ) override;
+    void SetXValue( double xValue ) override;
+    void SetYValue( double yValue ) override;
+    void SetValue( double x, double y ) override;
+    void SetValue( QPointF point ) override;
+    void SetLineStyle( ELineStyle style ) override;
+    void SetLinePen( QPen pen ) override;
+    void SetSymbol( CSymbol symbol ) override;
+    void SetLabel( QString string ) override;
+    void SetLabelAlignment( Qt::Alignment alignment ) override;
+    void SetLabelOrientation( Qt::Orientation orientation ) override;
+    void SetSpacing( int spacimg ) override;
+    void SetTitle( QString title ) override;
+    void Attach( IDiagram *diagram ) override;
     ~CPlotMarker();
 };
 

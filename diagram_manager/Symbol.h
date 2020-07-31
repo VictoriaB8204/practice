@@ -33,7 +33,7 @@ class CSymbol
     QSize m_size;
 
 public:
-    CSymbol( EStyle, QBrush, QPen, QSize );
+    CSymbol( EStyle style, QBrush brush, QPen pen, QSize size );
     QwtSymbol* ToQwtSymbol();
 };
 

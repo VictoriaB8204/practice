@@ -21,17 +21,17 @@ class CPlotCurve : public ICurve
     QwtPlotCurve *m_curve;
 public:
     CPlotCurve();
-    void SetPaintAttribute( EPaintAttribute, bool on = true ) override;
-    void SetLegendAttribute( ELegendAttribute, bool on = true ) override;
-    void SetSamples( const QVector< QPointF > & ) override;
-    void SetCurveAttribute( ECurveAttribute, bool on = true ) override;
-    void SetPen( const QPen & ) override;
-    void SetBrush( const QBrush & ) override;
-    void SetBaseLine( double ) override;
-    void SetStyle( ECurveStyle ) override;
-    void SetSymbol( CSymbol ) override;
-    void SetTitle( QString ) override;
-    void Attach( IDiagram * ) override;
+    void SetPaintAttribute( EPaintAttribute attribute, bool on = true ) override;
+    void SetLegendAttribute( ELegendAttribute attribute, bool on = true ) override;
+    void SetSamples( const QVector< QPointF > &point ) override;
+    void SetCurveAttribute( ECurveAttribute attribute, bool on = true ) override;
+    void SetPen( const QPen &pen ) override;
+    void SetBrush( const QBrush &brush ) override;
+    void SetBaseLine( double baseLine ) override;
+    void SetStyle( ECurveStyle style ) override;
+    void SetSymbol( CSymbol symbol ) override;
+    void SetTitle( QString title ) override;
+    void Attach( IDiagram *diagram ) override;
     ~CPlotCurve();
 };
 

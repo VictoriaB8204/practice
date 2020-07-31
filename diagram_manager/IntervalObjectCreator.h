@@ -19,10 +19,12 @@ class CIntervalObjectCreator
 {
 public:
     virtual IIntervalObject* FactoryMethod() const = 0;
+
     IIntervalObject* CreateObject() const
     {
         return this->FactoryMethod();
     }
+
     virtual ~CIntervalObjectCreator(){};
 };
 

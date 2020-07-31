@@ -9,21 +9,21 @@
 
 /////////////////////////////////////////////////////////////
 
-#include "Object.h"
+#include "IntervalObject.h"
 
 #ifdef __cplusplus
 extern "C"{
 #endif
 
-class CObjectCreator
+class CIntervalObjectCreator
 {
 public:
-    virtual IObject* FactoryMethod() const = 0;
-    IObject* CreateObject() const
+    virtual IIntervalObject* FactoryMethod() const = 0;
+    IIntervalObject* CreateObject() const
     {
         return this->FactoryMethod();
     }
-    virtual ~CObjectCreator();
+    virtual ~CIntervalObjectCreator(){};
 };
 
 /////////////////////////////////////////////////////////////

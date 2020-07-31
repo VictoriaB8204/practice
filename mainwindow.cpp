@@ -4,6 +4,196 @@
 #include "diagram_manager/PlotCreator.h"
 #include "diagram_manager/PlotCurveCreator.h"
 #include "diagram_manager/PlotMarkerCreator.h"
+#include "diagram_manager/PlotHistogramCreator.h"
+#include "diagram_manager/PlotIntervalCurveCreator.h"
+
+IDiagram* test_curves( IDiagram *curves_plot )
+{
+    curves_plot->SetTitle( "Curve plot" ); // заголовок
+
+    // Настройка отображения
+    curves_plot->SetAxisTitle( IDiagram::Y_LEFT, "Y" );
+    curves_plot->SetAxisTitle( IDiagram::X_BOTTOM, "X" );
+    curves_plot->SetBackground( Qt::white );
+    curves_plot->SetPanner( Qt::LeftButton );
+    curves_plot->SetMagnifier( Qt::RightButton );
+    curves_plot->SetLegend( IDiagram::RIGHT_LEGEND );
+    curves_plot->SetGrid( QPen( Qt::gray, 2 ) );
+
+    //Построение первой кривой
+
+    CCurveCreator *curveCreator = new CPlotCurveCreator();
+    ICurve *curve = curveCreator->CreateObject();
+    curve->SetTitle( "My first Curve" );
+    curve->SetPen( QPen( Qt::blue, 3 ) );// цвет и толщина кривой
+
+    CSymbol *symbol = new CSymbol( EStyle(0),
+        QBrush( Qt::yellow ), QPen( Qt::blue, 2 ), QSize( 15, 15 ) );
+    curve->SetSymbol( *symbol ); // маркеры кривой
+
+    QPolygonF points;
+
+    points << QPointF( 1.0, 1.0 )
+           << QPointF( 2.0, 2.5 )
+           << QPointF( 3.0, 3.0 )
+           << QPointF( 4.0, 3.5 )
+           << QPointF( 5.0, 5.0 );
+
+    curve->SetSamples( points ); // добавить точки на кривую
+
+    curve->Attach( curves_plot ); // отобразить кривую на графике
+
+    //Построение второй кривой
+
+    ICurve *secondCurve = curveCreator->CreateObject();
+    secondCurve->SetTitle( "My second Curve" );
+    secondCurve->SetPen( QPen( Qt::red, 3 ) ); // цвет и толщина кривой
+    secondCurve->SetSymbol( *symbol );
+
+    points.clear();
+
+    points << QPointF( 1.0, 5.0 )
+           << QPointF( 2.0, 3.5 )
+           << QPointF( 3.0, 3.0 )
+           << QPointF( 4.0, 2.5 )
+           << QPointF( 5.0, 1.0 );
+
+    secondCurve->SetSamples( points ); // добавить точки на кривую
+
+    secondCurve->Attach( curves_plot ); // отобразить кривую на графике
+
+    return curves_plot;
+}
+
+IDiagram* test_markers( IDiagram *marker_plot )
+{
+    marker_plot->SetTitle( "Marker plot" ); // заголовок
+
+    // Настройка отображения
+    marker_plot->SetAxisTitle( IDiagram::Y_LEFT, "Y" );
+    marker_plot->SetAxisTitle( IDiagram::X_BOTTOM, "X" );
+    marker_plot->SetBackground( Qt::white );
+    marker_plot->SetPanner( Qt::LeftButton );
+    marker_plot->SetMagnifier( Qt::RightButton );
+    marker_plot->SetGrid( QPen( Qt::gray, 2 ) );
+
+    CSymbol *marker_symbol = new CSymbol( DIAMOND, QBrush( Qt::yellow ), QPen( Qt::blue, 2 ), QSize( 50, 50 ) );
+
+    CMarkerCreator *markerCreator = new CPlotMarkerCreator();
+    IMarker *marker = markerCreator->CreateObject();
+
+    marker->SetTitle( "Demo Marker" );
+    marker->SetSymbol( *marker_symbol );
+    marker->SetValue( 300.0, 300.0 );
+
+    marker->Attach( marker_plot );
+
+    IMarker *second_marker = markerCreator->CreateObject();
+
+    second_marker->SetTitle( "Demo Marker" );
+    second_marker->SetSymbol( *marker_symbol );
+    second_marker->SetValue( 500.0, 500.0 );
+
+    second_marker->Attach( marker_plot );
+
+    return marker_plot;
+}
+
+IDiagram* test_histogram( IDiagram *histogram_plot )
+{
+    histogram_plot->SetTitle( "Histogram plot" ); // заголовок
+
+    // Настройка отображения
+    histogram_plot->SetAxisTitle( IDiagram::Y_LEFT, "Y" );
+    histogram_plot->SetAxisTitle( IDiagram::X_BOTTOM, "X" );
+    histogram_plot->SetBackground( Qt::white );
+    histogram_plot->SetLegend( IDiagram::RIGHT_LEGEND );
+    histogram_plot->SetPanner( Qt::LeftButton );
+    histogram_plot->SetMagnifier( Qt::RightButton );
+    histogram_plot->SetGrid( QPen( Qt::gray, 2 ) );
+
+    CIntervalObjectCreator *histogramCreator = new CPlotHistogramCreator();
+    IIntervalObject *histogram = histogramCreator->CreateObject();
+
+    histogram->SetTitle( "Demo first Histogram" );
+    histogram->SetPen( QPen( Qt::black, 1.0 ) );
+    histogram->SetBrush( QBrush( Qt::yellow ) );
+
+    QVector<CIntervalSample> *intervals = new QVector<CIntervalSample>;
+    float di = 0.1;
+    for (float i = 0; i <= 5; i += di)
+        intervals->append( CIntervalSample( qAbs(qCos(i)), i, i + di ) );
+
+    histogram->SetSamples( *intervals );
+
+    histogram->Attach( histogram_plot );
+
+    IIntervalObject *second_histogram = histogramCreator->CreateObject();
+
+    second_histogram->SetTitle( "Demo second Histogram" );
+    second_histogram->SetPen( QPen( Qt::black, 1.0 ) );
+    second_histogram->SetBrush( QBrush( Qt::green ) );
+    second_histogram->SetStyle( IIntervalObject::STICKS );
+
+    intervals->clear();
+    di = 0.1;
+    for (float i = 0; i <=5; i += di)
+        intervals->append( CIntervalSample( qAbs(qSin(i)), i, i+di ) );
+
+    second_histogram->SetSamples( *intervals );
+
+    second_histogram->Attach( histogram_plot  );
+
+    return histogram_plot;
+}
+
+IDiagram* test_interval_curve(IDiagram *interval_curve_plot)
+{
+    interval_curve_plot->SetTitle( "Interval curve plot" ); // заголовок
+
+    // Настройка отображения
+    interval_curve_plot->SetAxisTitle( IDiagram::Y_LEFT, "Y" );
+    interval_curve_plot->SetAxisTitle( IDiagram::X_BOTTOM, "X" );
+    interval_curve_plot->SetBackground( Qt::white );
+    interval_curve_plot->SetLegend( IDiagram::RIGHT_LEGEND );
+    interval_curve_plot->SetPanner( Qt::LeftButton );
+    interval_curve_plot->SetMagnifier( Qt::RightButton );
+    interval_curve_plot->SetGrid( QPen( Qt::gray, 2 ) );
+
+    CIntervalObjectCreator *intervalCurveCreator = new CPlotIntervalCurveCreator();
+    IIntervalObject *intervalCurve = intervalCurveCreator->CreateObject();
+
+    intervalCurve->SetTitle( "Demo first Interval curve" );
+    intervalCurve->SetPen( QPen( Qt::black, 1.0 ) );
+    intervalCurve->SetBrush( QBrush( Qt::yellow ) );
+
+    QVector<CIntervalSample> *intervals = new QVector<CIntervalSample>;
+    float di = 0.1;
+    for (float i = 0; i <= 5; i += di)
+        intervals->append( CIntervalSample( qAbs(qCos(i)), i, i + di ) );
+
+    intervalCurve->SetSamples( *intervals );
+
+    intervalCurve->Attach( interval_curve_plot );
+
+    IIntervalObject *second_intervalCurve = intervalCurveCreator->CreateObject();
+
+    second_intervalCurve->SetTitle( "Demo second Interval curve" );
+    second_intervalCurve->SetPen( QPen( Qt::black, 1.0 ) );
+    second_intervalCurve->SetBrush( QBrush( Qt::green ) );
+    second_intervalCurve->SetStyle( IIntervalObject::STICKS );
+
+    intervals->clear();
+    di = 0.1;
+    for (float i = 0; i <= 5; i += di)
+        intervals->append( CIntervalSample( qAbs(qSin(i)), i, i + di ) );
+
+    second_intervalCurve->SetSamples( *intervals );
+
+    second_intervalCurve->Attach( interval_curve_plot );
+
+    return interval_curve_plot;
+}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -12,78 +202,39 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     CDiagramCreator *creator = new CPlotCreator();
-    IDiagram *d_plot = creator->CreateDiagram();
-    setCentralWidget(d_plot->SetWidget());
 
-    d_plot->SetTitle( "Qwt demonstration" ); // заголовок
+    //////////////////////////////////////////////
+    //Построение графика с двумя кривыми
+    //////////////////////////////////////////////
 
-    // Параметры осей координат
-    d_plot->SetAxisTitle(Y_LEFT, "Y");
-    d_plot->SetAxisTitle(X_BOTTOM, "X");
-    d_plot->InsertLegend(RIGHT_LEGEND);
+//    IDiagram *curves_plot = creator->CreateDiagram();
+//    setCentralWidget( curves_plot->SetWidget() );
+//    curves_plot = test_curves( curves_plot );
 
-    CObjectCreator *curveCreator = new CPlotCurveCreator();
-    IObject *curve = curveCreator->CreateObject();
-    curve->SetTitle( "Demo Curve" );
-    QPen *pen = new QPen( Qt::blue, 3 );
-    curve->SetPen( *pen ); // цвет и толщина кривой
+    //////////////////////////////////////////////
+    //Построение графика с маркерами
+    //////////////////////////////////////////////
 
-    CObjectCreator *markerCreator = new CPlotMarkerCreator();
-    IObject *marker = markerCreator->CreateObject();
-    marker->SetTitle( "Demo Marker" );
-    marker->SetPen( *pen ); // цвет и толщина кривой
+//    IDiagram *marker_plot = creator->CreateDiagram();
+//    setCentralWidget( marker_plot->SetWidget() );
+//    marker_plot = test_markers( marker_plot );
 
-    // Маркеры кривой
-    // #include <qwt_symbol.h>
-    CSymbol *symbol = new CSymbol( EStyle(0),
-        QBrush( Qt::yellow ), QPen( Qt::blue, 2 ), QSize( 15, 15 ) );
-    curve->SetSymbol( symbol );
+    //////////////////////////////////////////////
+    //Построение графика с гистограммой
+    //////////////////////////////////////////////
 
-    // Добавить точки на ранее созданную кривую
-    QPolygonF points;
+//    IDiagram *histogram_plot = creator->CreateDiagram();
+//    setCentralWidget( histogram_plot->SetWidget() );
+//    histogram_plot = test_histogram( histogram_plot );
 
-       points << QPointF( 1.0, 1.0 ) // координаты x, y
-    << QPointF( 1.5, 2.0 ) << QPointF( 3.0, 2.0 )
-    << QPointF( 3.5, 3.0 ) << QPointF( 5.0, 3.0 )
-    << QPointF( 2.5, 1.0 ) << QPointF( 5.0, 2.5 );
+    //////////////////////////////////////////////
+    //Построение графика с интервальной кривой
+    //////////////////////////////////////////////
 
-     curve->SetSamples( points ); // ассоциировать набор точек с кривой
+    IDiagram *interval_curve_plot = creator->CreateDiagram();
+    setCentralWidget( interval_curve_plot->SetWidget() );
+    interval_curve_plot = test_interval_curve( interval_curve_plot );
 
-     curve->Attach( d_plot ); // отобразить кривую на графике
-
-     // Включить возможность приближения/удаления графика
-      // #include <qwt_plot_magnifier.h>
-//      QwtPlotMagnifier *magnifier = new QwtPlotMagnifier(d_plot->canvas());
-//      // клавиша, активирующая приближение/удаление
-//      magnifier->setMouseButton(Qt::LeftButton);
-
-
-//      // Включить возможность перемещения по графику
-//      // #include <qwt_plot_panner.h>
-//      QwtPlotPanner *d_panner = new QwtPlotPanner( d_plot->canvas() );
-//      // клавиша, активирующая перемещение
-//      d_panner->setMouseButton( Qt::RightButton );
-
-//      // Включить отображение координат курсора и двух перпендикулярных
-//      // линий в месте его отображения
-//      // #include <qwt_plot_picker.h>
-
-//       // настройка функций
-//      QwtPlotPicker *d_picker =
-//              new QwtPlotPicker(
-//                  QwtPlot::xBottom, QwtPlot::yLeft, // ассоциация с осями
-//      QwtPlotPicker::CrossRubberBand, // стиль перпендикулярных линий
-//      QwtPicker::ActiveOnly, // включение/выключение
-//      d_plot->canvas() ); // ассоциация с полем
-
-//      // Цвет перпендикулярных линий
-//      d_picker->setRubberBandPen( QColor( Qt::red ) );
-
-//      // цвет координат положения указателя
-//      d_picker->setTrackerPen( QColor( Qt::black ) );
-
-//      // непосредственное включение вышеописанных функций
-//      d_picker->setStateMachine( new QwtPickerDragPointMachine() );
 }
 
 MainWindow::~MainWindow()

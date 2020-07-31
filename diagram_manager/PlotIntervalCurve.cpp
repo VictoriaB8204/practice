@@ -24,9 +24,9 @@ CPlotIntervalCurve::CPlotIntervalCurve()
 
 /////////////////////////////////////////////////////////////
 
-void CPlotIntervalCurve::SetPaintAttribute ( EPaintAttribute attribute, bool on )
+void CPlotIntervalCurve::SetTitle ( QString title )
 {
-    m_curve->setPaintAttribute( QwtPlotIntervalCurve::PaintAttribute(attribute), on );
+    m_curve->setTitle( title );
 }
 
 /////////////////////////////////////////////////////////////
@@ -64,16 +64,9 @@ void CPlotIntervalCurve::SetStyle (ECurveStyle style )
 
 /////////////////////////////////////////////////////////////
 
-void CPlotIntervalCurve::SetSymbol ( CIntervalSymbol symbol )
+void CPlotIntervalCurve::Attach( IDiagram *diagram )
 {
-    m_curve->setSymbol( symbol.ToQwtIntervalSymbol() );
-}
-
-/////////////////////////////////////////////////////////////
-
-void CPlotIntervalCurve::Attach( CPlot *plot )
-{
-    m_curve->attach( plot->ToQwtPlot() );
+    m_curve->attach( diagram->SetParent() );
 }
 
 /////////////////////////////////////////////////////////////

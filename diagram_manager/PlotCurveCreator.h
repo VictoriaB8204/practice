@@ -9,13 +9,13 @@
 
 /////////////////////////////////////////////////////////////
 
-#include "ObjectCreator.h"
+#include "CurveCreator.h"
 #include "PlotCurve.h"
 
-class CPlotCurveCreator : public CObjectCreator
+class CPlotCurveCreator : public CCurveCreator
 {
 public:
-    IObject* FactoryMethod() const override
+    ICurve* FactoryMethod() const override
     {
         return new CPlotCurve();
     }

@@ -38,9 +38,9 @@ void CPlotCurve::SetLegendAttribute( ELegendAttribute attribute, bool on )
 
 /////////////////////////////////////////////////////////////
 
-void CPlotCurve::SetSamples( double *xData, double *yData, int size )
+void CPlotCurve::SetSamples( const QVector< QPointF > &points )
 {
-    m_curve->setSamples( xData, yData, size );
+    m_curve->setSamples( points );
 }
 
 /////////////////////////////////////////////////////////////
@@ -94,9 +94,9 @@ void CPlotCurve::SetTitle(QString string)
 
 /////////////////////////////////////////////////////////////
 
-void CPlotCurve::Attach( CPlot *plot )
+void CPlotCurve::Attach( IDiagram *diagram )
 {
-    m_curve->attach( plot->SetParent() );
+    m_curve->attach( diagram->SetParent() );
 }
 
 /////////////////////////////////////////////////////////////

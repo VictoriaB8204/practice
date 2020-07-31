@@ -24,6 +24,13 @@ CPlotHistogram::CPlotHistogram()
 
 /////////////////////////////////////////////////////////////
 
+void CPlotHistogram::SetTitle ( QString title )
+{
+    m_histogram->setTitle( title );
+}
+
+/////////////////////////////////////////////////////////////
+
 void CPlotHistogram::SetSamples ( QVector< CIntervalSample > samples)
 {
     QVector<QwtIntervalSample> vector;
@@ -55,23 +62,11 @@ void CPlotHistogram::SetStyle (ECurveStyle style )
     m_histogram->setStyle( QwtPlotHistogram::HistogramStyle(style) );
 }
 
-void CPlotHistogram::SetSymbol ( CColumnSymbol symbol )
-{
-    m_histogram->setSymbol( symbol.ToQwtColumnSymbol() );
-}
-
 /////////////////////////////////////////////////////////////
 
-void CPlotHistogram::SetBaseline (double baseline )
+void CPlotHistogram::Attach( IDiagram *diagram )
 {
-    m_histogram->setBaseline( baseline );
-}
-
-/////////////////////////////////////////////////////////////
-
-void CPlotHistogram::Attach( CPlot *plot )
-{
-    m_histogram->attach( plot->ToQwtPlot() );
+    m_histogram->attach( diagram->SetParent() );
 }
 
 /////////////////////////////////////////////////////////////

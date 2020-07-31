@@ -9,21 +9,21 @@
 
 /////////////////////////////////////////////////////////////
 
-#include "Object.h"
+#include "Curve.h"
 
 #ifdef __cplusplus
 extern "C"{
 #endif
 
-class CObjectCreator
+class CCurveCreator
 {
 public:
-    virtual IObject* FactoryMethod() const = 0;
-    IObject* CreateDiagram() const
+    virtual ICurve* FactoryMethod() const = 0;
+    ICurve* CreateObject() const
     {
         return this->FactoryMethod();
     }
-    virtual ~CObjectCreator();
+    virtual ~CCurveCreator(){};
 };
 
 /////////////////////////////////////////////////////////////

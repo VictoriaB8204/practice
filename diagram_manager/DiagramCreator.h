@@ -1,4 +1,33 @@
-#ifndef DIAGRAMCREATOR_H
-#define DIAGRAMCREATOR_H
+/*
+ * Copyright (C) 2020 Rhonda Software.
+ * All rights reserved.
+ */
 
-#endif // DIAGRAMCREATOR_H
+/////////////////////////////////////////////////////////////
+
+#pragma once
+
+/////////////////////////////////////////////////////////////
+
+#include "Diagram.h"
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+class CDiagramCreator
+{
+public:
+    virtual IDiagram* FactoryMethod() const = 0;
+    IDiagram* CreateDiagram() const
+    {
+        return this->FactoryMethod();
+    }
+    virtual ~CDiagramCreator(){};
+};
+
+/////////////////////////////////////////////////////////////
+
+#ifdef __cplusplus
+}
+#endif

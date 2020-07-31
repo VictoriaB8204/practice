@@ -9,13 +9,13 @@
 
 /////////////////////////////////////////////////////////////
 
-#include "ObjectCreator.h"
+#include "IntervalObjectCreator.h"
 #include "PlotIntervalCurve.h"
 
-class CPlotIntervalCurveCreator : public CObjectCreator
+class CPlotIntervalCurveCreator : public CIntervalObjectCreator
 {
 public:
-    IObject* FactoryMethod() const override
+    IIntervalObject* FactoryMethod() const override
     {
         return new CPlotIntervalCurve();
     }

@@ -1,4 +1,0 @@
-#ifndef INTERVALSYMBOL_H
-#define INTERVALSYMBOL_H
-
-#endif // INTERVALSYMBOL_H

@@ -9,27 +9,24 @@
 
 /////////////////////////////////////////////////////////////
 
-#include "GraphicSettings.h"
-#include "ColumnSymbol.h"
-#include "IntervalSample.h"
+#include "IntervalObject.h"
 #include <qwt_plot_histogram.h>
 
 #ifdef __cplusplus
 extern "C"{
 #endif
 
-class CPlotHistogram : public IGraphicSettings
+class CPlotHistogram : public IIntervalObject
 {
     QwtPlotHistogram *m_histogram;
 public:
     CPlotHistogram();
-    void SetSamples ( QVector< CIntervalSample > samples);
-    void SetPen (const QPen &pen) override;
-    void SetBrush (const QBrush &brush ) override;
-    void SetStyle (ECurveStyle style ) override;
-    void SetSymbol ( CColumnSymbol symbol );
-    void SetBaseline (double baseline );
-    void Attach( CPlot *plot ) override;
+    void SetTitle ( QString ) override;
+    void SetSamples ( QVector< CIntervalSample > ) override;
+    void SetPen ( const QPen & ) override;
+    void SetBrush ( const QBrush & ) override;
+    void SetStyle ( ECurveStyle ) override;
+    void Attach( IDiagram * ) override;
     ~CPlotHistogram();
 };
 

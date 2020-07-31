@@ -9,8 +9,8 @@
 
 /////////////////////////////////////////////////////////////
 
-#include <qwt_symbol.h>
 #include <qwt_plot.h>
+#include <qwt_symbol.h>
 
 enum EStyle
 {
@@ -33,7 +33,7 @@ class CSymbol
     QSize m_size;
 
 public:
-    CSymbol( EStyle style, QBrush brush, QPen pen, QSize size );
+    CSymbol( EStyle, QBrush, QPen, QSize );
     QwtSymbol* ToQwtSymbol();
 };
 

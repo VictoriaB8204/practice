@@ -5,40 +5,17 @@
 
 /////////////////////////////////////////////////////////////
 
-#include "Diagram.h"
+#include "Plot.h"
 #include <qwt_legend.h>
 #include <qwt_plot_magnifier.h>
 #include <qwt_plot_panner.h>
+#include <qwt_plot_grid.h>
 
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 
 //
-
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-
-
-class CPlot : public IDiagram
-{
-    QwtPlot *m_plot;
-
-public:
-    CPlot();
-    void SetAxisTitle( EAxis axis, QString string ) override;
-    void SetAxisScale( EAxis axis, double min, double max, double step ) override;
-    void SetTitle( QString string ) override;
-    void SetFooter( QString string ) override;
-    void SetAxisMaxMinor( EAxis axis , int maxMinor ) override;
-    void SetAxisMaxMajor( EAxis axis, int maxMajor ) override;
-    void InsertLegend( ELegendPosition position ) override;
-    void SetMagnifier( Qt::MouseButton button ) override;
-    void SetPanner( Qt::MouseButton button ) override;
-    QwtPlot* ToQwtPlot();
-    ~CPlot();
-};
 
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
@@ -79,6 +56,13 @@ void CPlot::SetFooter( QString string )
 
 /////////////////////////////////////////////////////////////
 
+void CPlot::SetBackground( Qt::GlobalColor color )
+{
+    m_plot->setCanvasBackground( color );
+}
+
+/////////////////////////////////////////////////////////////
+
 void CPlot::SetAxisMaxMinor( EAxis axis , int maxMinor )
 {
     m_plot->setAxisMaxMinor( axis, maxMinor );
@@ -93,7 +77,16 @@ void CPlot::SetAxisMaxMajor( EAxis axis, int maxMajor )
 
 /////////////////////////////////////////////////////////////
 
-void CPlot::InsertLegend( ELegendPosition position )
+void CPlot::SetGrid( QPen pen )
+{
+    QwtPlotGrid *grid = new QwtPlotGrid();
+    grid->setPen( pen );
+    grid->attach( m_plot );
+}
+
+/////////////////////////////////////////////////////////////
+
+void CPlot::SetLegend( ELegendPosition position )
 {
     m_plot->insertLegend( new QwtLegend(), QwtPlot::LegendPosition(position) );
 }
@@ -116,7 +109,14 @@ void CPlot::SetPanner( Qt::MouseButton button )
 
 /////////////////////////////////////////////////////////////
 
-QwtPlot* CPlot::ToQwtPlot()
+QwtPlot* CPlot::SetWidget()
+{
+    return m_plot;
+}
+
+/////////////////////////////////////////////////////////////
+
+QwtPlot* CPlot::SetParent()
 {
     return m_plot;
 }

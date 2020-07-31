@@ -9,21 +9,21 @@
 
 /////////////////////////////////////////////////////////////
 
-#include <qwt_interval_symbol.h>
-
-enum EIntervalSymbolStyle { NoSymbol = -1, Bar, Box, UserSymbol = 1000 };
+#include "Marker.h"
 
 #ifdef __cplusplus
 extern "C"{
 #endif
 
-class CIntervalSymbol
+class CMarkerCreator
 {
-    QwtIntervalSymbol *m_symbol;
 public:
-    CIntervalSymbol(EIntervalSymbolStyle style);
-    QwtIntervalSymbol* ToQwtIntervalSymbol();
-    ~CIntervalSymbol();
+    virtual IMarker* FactoryMethod() const = 0;
+    IMarker* CreateObject() const
+    {
+        return this->FactoryMethod();
+    }
+    virtual ~CMarkerCreator(){};
 };
 
 /////////////////////////////////////////////////////////////
